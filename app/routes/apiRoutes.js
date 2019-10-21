@@ -8,7 +8,7 @@ module.exports = function(app) {
 
     app.post("/api/friends", function(req, res) {
 
-        // i think the actual go logic goes in here?
+        // i think the actual logic goes in here?
         
     })
 }
