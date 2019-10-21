@@ -145,30 +145,31 @@
         </div>
     </div>
     <script type="text/javascript">
-        var config = {
-            ".chosen-select": {},
-            ".chosen-select-deselect": {
-                allow_single_deselect: true
-            },
-            ".chosen-select-no-single": {
-                disable_search_threshold: 10
-            },
-            ".chosen-select-no_results": {
-                no_results_text: "Oops, nothing found"
-            },
-            ".chosen-select-width": {
-                width: 95%
-            }
-        }
+        // var config = {
+        //     ".chosen-select": {},
+        //     ".chosen-select-deselect": {
+        //         allow_single_deselect: true
+        //     },
+        //     ".chosen-select-no-single": {
+        //         disable_search_threshold: 10
+        //     },
+        //     ".chosen-select-no_results": {
+        //         no_results_text: "Oops, nothing found"
+        //     },
+        //     ".chosen-select-width": {
+        //         width: "95%"
+        //     }
+        // }
 
-        for (var selector in config) {
-            $(selector).chosen(config[selector])
-        }
+        // for (var selector in config) {
+        //     $(selector).chosen(config[selector])
+        // }
 
         $("#submit").on("click", function(e) {
             e.preventDefault();
 
             function validate() {
+                console.log("inside of validate.");
                 var isvalid = true;
                 $(".form-control").each(function() {
                     if ($(this).val() === '') {
@@ -185,6 +186,7 @@
             }
 
             if (validate()) {
+                console.log("inside of if");
                 var newFriend = {
                 name: $("#name").val().trim(),
                 photo: $("#photo").val().trim(),
