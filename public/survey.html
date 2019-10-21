@@ -118,20 +118,74 @@
             <button type="submit" class="btn btn-primary btn-lg btn-block" id="submit">Submit</button>
         </div>
         <footer class="footer">
-                <div class="container">
-                    <p>
-                        <a href="./api/friends">API Friends List</a>
-                         | 
-                        <a href="https://github.com/tardyparty/friendFinder">Github Repo</a>
-                    </p>
+            <div class="container">
+                <p>
+                    <a href="./api/friends">API Friends List</a>
+                        | 
+                    <a href="https://github.com/tardyparty/friendFinder">Github Repo</a>
+                </p>
+            </div>
+        </footer>
+        <div id="results" class="modal fade" role="dialog" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal">x</button>
+                    <h2 class="modal-title">
+                        <strong>Best Match</strong>
+                    </h2>
                 </div>
-            </footer>
+                <div class="modal-body">
+                    <h2 id="match-name"></h2>
+                    <img id="match-photo">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <script>
+    <script type="text/javascript">
+        var config = {
+            ".chosen-select": {},
+            ".chosen-select-deselect": {
+                allow_single_deselect: true
+            },
+            ".chosen-select-no-single": {
+                disable_search_threshold: 10
+            },
+            ".chosen-select-no_results": {
+                no_results_text: "Oops, nothing found"
+            },
+            ".chosen-select-width": {
+                width: 95%
+            }
+        }
+
+        for (var selector in config) {
+            $(selector).chosen(config[selector])
+        }
+
         $("#submit").on("click", function(e) {
             e.preventDefault();
 
-            var newFriend = {
+            function validate() {
+                var isvalid = true;
+                $(".form-control").each(function() {
+                    if ($(this).val() === '') {
+                        isvalid = false;
+                    }
+                });
+
+                $(".chosen-select").each(function() {
+                    if ($(this).val() === '') {
+                        isvalid = false;
+                    }
+                })
+                return isvalid;
+            }
+
+            if (validate()) {
+                var newFriend = {
                 name: $("#name").val().trim(),
                 photo: $("#photo").val().trim(),
                 scores: [
@@ -145,15 +199,21 @@
                     $("#q8").val().trim(),
                     $("#q9").val().trim(),
                     $("#q10").val().trim(),
-                ]
+                    ]
+                }
+
+                $.post("/api/friends", newFriend, function(data) {
+                    
+                    $("match-name").text(data.name);
+                    $("#match-photo").attr("src", data.photo);
+                    $("#results").modal("toggle");
+                })
             }
 
-            console.log(newFriend);
-
-            $.post("/api/friends", newFriend, function(data) {
-                
-            })
-        }
+            else {
+                alert("Please fill out all fields.");
+            }
+        });
     </script>
 </body>
 </html>
