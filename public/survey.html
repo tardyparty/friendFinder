@@ -130,7 +130,7 @@
             </div>
         </footer>
         <div id="results-modal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+            <div class="modal-dialog"  style="background-color: white">
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal">x</button>
                     <h2 class="modal-title">
@@ -209,7 +209,7 @@
                     console.log(data);
                     console.log(data.name);
                     
-                    $("match-name").text(data.name);
+                    $("#match-name").text(data.name);
                     $("#match-photo").attr("src", data.photo);
                     $("#results-modal").modal("toggle");
                 })
