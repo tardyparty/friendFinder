@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.5.1/chosen.jquery.min.js"></script>
     <title>Friend Finder</title>
 </head>
 <body>
@@ -126,9 +129,9 @@
                 </p>
             </div>
         </footer>
-        <div id="results" class="modal fade" role="dialog" style="display: none;">
+        <div id="results-modal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal">x</button>
                     <h2 class="modal-title">
                         <strong>Best Match</strong>
@@ -136,7 +139,7 @@
                 </div>
                 <div class="modal-body">
                     <h2 id="match-name"></h2>
-                    <img id="match-photo">
+                    <img id="match-photo" src="https://images.pexels.com/photos/736716/pexels-photo-736716.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -145,31 +148,30 @@
         </div>
     </div>
     <script type="text/javascript">
-        // var config = {
-        //     ".chosen-select": {},
-        //     ".chosen-select-deselect": {
-        //         allow_single_deselect: true
-        //     },
-        //     ".chosen-select-no-single": {
-        //         disable_search_threshold: 10
-        //     },
-        //     ".chosen-select-no_results": {
-        //         no_results_text: "Oops, nothing found"
-        //     },
-        //     ".chosen-select-width": {
-        //         width: "95%"
-        //     }
-        // }
+        var config = {
+            ".chosen-select": {},
+            ".chosen-select-deselect": {
+                allow_single_deselect: true
+            },
+            ".chosen-select-no-single": {
+                disable_search_threshold: 10
+            },
+            ".chosen-select-no_results": {
+                no_results_text: "Oops, nothing found"
+            },
+            ".chosen-select-width": {
+                width: "95%"
+            }
+        }
 
-        // for (var selector in config) {
-        //     $(selector).chosen(config[selector])
-        // }
+        for (var selector in config) {
+            $(selector).chosen(config[selector])
+        }
 
         $("#submit").on("click", function(e) {
             e.preventDefault();
 
             function validate() {
-                console.log("inside of validate.");
                 var isvalid = true;
                 $(".form-control").each(function() {
                     if ($(this).val() === '') {
@@ -186,7 +188,6 @@
             }
 
             if (validate()) {
-                console.log("inside of if");
                 var newFriend = {
                 name: $("#name").val().trim(),
                 photo: $("#photo").val().trim(),
@@ -205,10 +206,11 @@
                 }
 
                 $.post("/api/friends", newFriend, function(data) {
+                    console.log(data);
                     
                     $("match-name").text(data.name);
                     $("#match-photo").attr("src", data.photo);
-                    $("#results").modal("toggle");
+                    $("#results-modal").modal("toggle");
                 })
             }
 
