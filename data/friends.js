@@ -14,6 +14,38 @@ var friendsArray = [
             4,
             1
         ]
+    },
+    {
+        name: "Rebecca Wentz",
+        photo: "https://image.shutterstock.com/image-photo/happy-cheerful-young-woman-wearing-260nw-613759379.jpg",
+        scores: [
+            2,
+            1,
+            4,
+            2,
+            5,
+            1,
+            3,
+            4,
+            3,
+            2,
+        ]
+    },
+    {
+        name: "John Beck",
+        photo: "https://image.shutterstock.com/image-photo/asian-man-portrait-smiling-isolated-260nw-648509056.jpg",
+        scores: [
+            5,
+            3,
+            4,
+            2,
+            3,
+            4,
+            1,
+            5,
+            1,
+            3
+        ]
     }
 ];
 
